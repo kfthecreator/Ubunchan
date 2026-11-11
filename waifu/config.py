@@ -72,7 +72,7 @@ class Config:
     history_messages: int = 40
     working_dir: str = str(Path.home())
     audit_log: str = str(Path.home() / ".local/share/waifu/audit.log")
-    vrm_path: str = str(Path.home() / "Downloads/Ubunchan1.vrm")
+    vrm_path: str = str(PROJECT_DIR / "assets/Ubunchan.vrm")
     claude: ClaudeConfig = field(default_factory=ClaudeConfig)
     ollama: OllamaConfig = field(default_factory=OllamaConfig)
     voice: VoiceConfig = field(default_factory=VoiceConfig)
@@ -104,6 +104,8 @@ def load_config(path: str | Path | None = None) -> Config:
     cfg.working_dir = os.path.expanduser(cfg.working_dir)
     cfg.audit_log = os.path.expanduser(cfg.audit_log)
     cfg.vrm_path = os.path.expanduser(cfg.vrm_path)
+    if not os.path.isabs(cfg.vrm_path):
+        cfg.vrm_path = str(PROJECT_DIR / cfg.vrm_path)
     cfg.voice.tts_model = os.path.expanduser(cfg.voice.tts_model)
     if not os.path.isabs(cfg.voice.tts_model):
         cfg.voice.tts_model = str(PROJECT_DIR / cfg.voice.tts_model)

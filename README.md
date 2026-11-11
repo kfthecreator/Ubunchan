@@ -5,22 +5,33 @@ with lip-sync and facial expressions, and can run terminal commands for you afte
 them. A hard-coded safety guard makes sure she can **never** run `sudo rm -rf /*` or anything
 like it.
 
-## Setup
+## Quick start (Ubuntu)
 
 ```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/python -m piper.download_voices --download-dir models/piper en_US-hfc_female-medium
-cp config.example.toml config.toml   # optional
+git clone https://github.com/kfthecreator/Ubunchan.git
+cd Ubunchan
+./scripts/install.sh
+./scripts/ubunchan
 ```
 
-- **Claude backend:** set `ANTHROPIC_API_KEY` (or run `ant auth login`).
-- **Local backend:** `ollama serve` with a pulled model (default `llama3.2:3b`). If no Claude key
-  is found, the app falls back to Ollama automatically.
-- The Whisper speech model (`base.en`, ~150 MB) is downloaded on first launch.
-- **Avatar:** bring your own VRM model (make one for free in [VRoid Studio](https://vroid.com/en/studio)
-  and export it as `.vrm`). Point the app at it with `--vrm path/to/model.vrm`, or set
-  `vrm_path` in `config.toml`. VRM 0.x and 1.0 both work.
+`install.sh` installs the few system packages it needs, sets up Python, and adds Ubunchan to
+your app menu. The Ubunchan avatar and her voice are included.
+
+She also needs a "brain" (an LLM), one of:
+- **Ollama** (free, runs on your PC): install it from [ollama.com](https://ollama.com), then
+  `ollama pull llama3.2:3b`. On an AMD GPU that ROCm doesn't support, run Ollama with
+  `OLLAMA_VULKAN=1` for replies that are many times faster.
+- **Claude:** set `ANTHROPIC_API_KEY`. If no key is found, the app uses Ollama.
+
+The Whisper speech model (`base.en`, ~150 MB) downloads on first launch. For voice input, pick
+your mic in Settings → Sound → Input and set its volume to about 70%.
+
+**Your own avatar:** make one for free in [VRoid Studio](https://vroid.com/en/studio), export it
+as `.vrm`, and start the app with `--vrm path/to/model.vrm`, or set `vrm_path` in `config.toml`
+(copy `config.example.toml`). VRM 0.x and 1.0 both work.
+
+The Ubunchan avatar and the voice have their own licenses (both free, non-commercial, with credit
+required). See [CREDITS.md](CREDITS.md).
 
 ## Run
 
