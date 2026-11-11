@@ -1,0 +1,4 @@
+#!/bin/sh
+# Launch the Ubunchan desktop assistant.
+cd "$(dirname "$(readlink -f "$0")")/.." || exit 1
+exec .venv/bin/python -m waifu "$@"
